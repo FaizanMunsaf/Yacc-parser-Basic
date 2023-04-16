@@ -1,0 +1,36 @@
+/* Basic.jj Performing basic operations +, -, / and *.  */
+
+//Header
+
+options {
+STATIC = false ;
+}
+PARSER_BEGIN(Basic)
+class Basic {
+static void main( String[] args )
+throws ParseException, TokenMgrError {
+Basic parser = new Basic( System.in ) ;
+parser.Start() ; }
+}
+PARSER_END(Basic)
+
+//Tokens
+SKIP : { " " }
+SKIP : { "\n" | "\r" | "\r\n" }
+TOKEN : { < PLUS : "+" > }
+TOKEN : { < SUB : "-" > }
+TOKEN : { < DIV : "/" > }
+TOKEN : { < MUL : "*" > }
+TOKEN : { < NUMBER : (["0"-"9"])+ > }
+//Grammer
+void Start() :
+{}
+{
+<NUMBER>
+(
+(<PLUS> | <SUB> | <DIV> 
+ | <MUL> ) 
+<NUMBER>
+)*
+<EOF>
+ }
